@@ -27,16 +27,24 @@ public class ResumeParser {
         List<File> resumeFiles = new ArrayList<>();
         File dir = new File(directoryPath);
         if (dir.exists() && dir.isDirectory()) {
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File file : files) {
+            findFilesRecursively(dir, resumeFiles);
+        }
+        return resumeFiles;
+    }
+
+    private static void findFilesRecursively(File dir, List<File> resumeFiles) {
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    findFilesRecursively(file, resumeFiles);
+                } else {
                     String name = file.getName().toLowerCase();
-                    if (file.isFile() && (name.endsWith(".txt") || name.endsWith(".pdf"))) {
+                    if (name.endsWith(".txt") || name.endsWith(".pdf")) {
                         resumeFiles.add(file);
                     }
                 }
             }
         }
-        return resumeFiles;
     }
 }
