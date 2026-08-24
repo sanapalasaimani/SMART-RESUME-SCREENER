@@ -17,14 +17,15 @@ public class LLMService {
                 "Extract structured data: skills, experience, education. " +
                 "Compute a match score between candidate and job description (1-10). " +
                 "Provide a justification. " +
-                "Return exactly a JSON object (and nothing else) with keys: 'skills', 'experience', 'education', 'matchScore' (integer), and 'justification'." +
+                "Return exactly a JSON object (and nothing else) with exactly these keys: 'skills' (string), 'experience' (string), 'education' (string), 'matchScore' (integer), and 'justification' (string). " +
+                "IMPORTANT: All values except matchScore MUST be plain strings (not arrays or objects). Join multiple items with commas. Do NOT use placeholders like '[...]', '...', or 'etc' - provide the full extracted text." +
                 "\n\nJob Description:\n" + jobDescription +
                 "\n\nResume:\n" + resumeText;
 
-        String escapedPrompt = prompt.replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
+        String escapedPrompt = prompt.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
         
         String jsonPayload = "{"
-                + "\"model\": \"qwen/qwen3.6-27b\","
+                + "\"model\": \"llama-3.3-70b-versatile\","
                 + "\"messages\": [{\"role\": \"user\", \"content\": \"" + escapedPrompt + "\"}],"
                 + "\"temperature\": 0.1"
                 + "}";
@@ -117,6 +118,19 @@ public class LLMService {
                     break;
                 }
                 end++;
+            }
+            return json.substring(start, end);
+        } else if (json.charAt(i) == '[') {
+            // It's an array
+            int start = i;
+            int end = start;
+            int bracketCount = 0;
+            while (end < json.length()) {
+                char c = json.charAt(end);
+                if (c == '[') bracketCount++;
+                else if (c == ']') bracketCount--;
+                end++;
+                if (bracketCount == 0) break;
             }
             return json.substring(start, end);
         } else {

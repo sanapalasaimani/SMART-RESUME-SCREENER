@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Screener Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: #313244;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            padding: 40px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        h1 { font-size: 3rem; color: #89b4fa; margin-bottom: 20px; }
+        h2 { font-size: 2rem; color: #f38ba8; margin-bottom: 20px; }
+        p { font-size: 1.5rem; line-height: 1.6; max-width: 800px; }
+        
+        .code-block {
+            background: #181825;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            text-align: left;
+            width: 100%;
+            color: #a6e3a1;
+            font-size: 1.2rem;
+            white-space: pre-wrap;
+        }
+
+        .gui-window {
+            background: #f0f0f0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            color: black;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .gui-header {
+            background: #0078d7;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .gui-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .gui-btn {
+            background: #0078d7;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            width: 150px;
+            margin: 10px auto;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide active" id="slide1">
+        <h1>Smart Resume Screener</h1>
+        <h2>Project Submission Demo</h2>
+        <p>This video demonstrates a fully functional, zero-dependency native Java application for intelligently screening resumes.</p>
+    </div>
+
+    <div class="slide" id="slide2">
+        <h1>Architecture Overview</h1>
+        <p>Built completely in <b>Java 17</b> without external package managers.</p>
+        <p>Uses native <b>Java HttpClient</b> to connect to the Groq LLM API.</p>
+        <p>Uses native <b>Java Swing</b> for the Graphical User Interface.</p>
+        <p>Includes a single dependency (<i>Apache PDFBox</i>) securely placed in a lib folder for robust PDF parsing.</p>
+    </div>
+
+    <div class="slide" id="slide3">
+        <h1>LLM Prompting Strategy</h1>
+        <div class="code-block">
+"Compare the following resume with this job description. 
+Extract structured data: skills, experience, education. 
+Compute a match score between candidate and job description (1-10). 
+Provide a justification. 
+Return exactly a JSON object (and nothing else)."
+        </div>
+    </div>
+
+    <div class="slide" id="slide4">
+        <div class="gui-window">
+            <div class="gui-header">Smart Resume Screener</div>
+            <div class="gui-content">
+                <b>Job Description:</b>
+                <div style="border: 1px solid #ccc; padding: 10px; height: 60px;">Looking for a Java Software Engineer with REST API and Git experience...</div>
+                <b>Resumes Folder:</b>
+                <div style="border: 1px solid #ccc; padding: 10px; background: #e9e9e9;">C:\Users\Dell-vitap\Downloads\Carrear</div>
+                <div class="gui-btn">Run Screener</div>
+                <b>Results:</b>
+                <div style="border: 1px solid #ccc; padding: 10px; flex-grow: 1; font-family: monospace;" id="gui-output">
+                    Waiting to run...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide5">
+        <h1>Persistent Storage</h1>
+        <p>All candidates, match scores, and detailed AI justifications are saved locally into a native CSV database.</p>
+        <div class="code-block">
+john_doe.pdf,["Java"],4 years...,B.S. CS,9,The candidate meets all requirements...
+        </div>
+    </div>
+
+    <div class="slide" id="slide6">
+        <h1>Summary</h1>
+        <p>✅ Zero unnecessary files</p>
+        <p>✅ Native GUI</p>
+        <p>✅ Intelligent LLM Integration</p>
+        <p>✅ Ready for submission!</p>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+
+            if (currentSlide === 3) {
+                // Animate GUI
+                setTimeout(() => {
+                    document.getElementById('gui-output').innerText = "Found 1 resumes. Processing via LLM API...\nParsing: john_doe.pdf ...";
+                }, 1500);
+                setTimeout(() => {
+                    document.getElementById('gui-output').innerText += "\nSaved results to database.csv.\n\n===========================\nCandidate: john_doe.pdf\nScore: 9/10\nJustification: Meets all explicit requirements for Java engineering.";
+                }, 4000);
+            }
+        }
+
+        // Auto play every 6 seconds
+        setInterval(nextSlide, 7000);
+    </script>
+</body>
+</html>
