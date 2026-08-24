@@ -25,7 +25,7 @@ public class LLMService {
         String escapedPrompt = prompt.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
         
         String jsonPayload = "{"
-                + "\"model\": \"llama-3.3-70b-versatile\","
+                + "\"model\": \"llama-3.1-8b-instant\","
                 + "\"messages\": [{\"role\": \"user\", \"content\": \"" + escapedPrompt + "\"}],"
                 + "\"temperature\": 0.1"
                 + "}";
