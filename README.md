@@ -1,6 +1,6 @@
 # Smart Resume Screener
 
-![Demo Video](demo_video.webp)
+![Demo Video](demo_video.gif)
 
 A native Java CLI application for screening resumes against a job description using a Large Language Model (LLM).
 
