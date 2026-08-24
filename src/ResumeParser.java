@@ -23,11 +23,18 @@ public class ResumeParser {
         return new String(Files.readAllBytes(Paths.get(filePath)));
     }
 
-    public static List<File> getResumeFiles(String directoryPath) {
+    public static List<File> getResumeFiles(String path) {
         List<File> resumeFiles = new ArrayList<>();
-        File dir = new File(directoryPath);
-        if (dir.exists() && dir.isDirectory()) {
-            findFilesRecursively(dir, resumeFiles);
+        File fileOrDir = new File(path);
+        if (fileOrDir.exists()) {
+            if (fileOrDir.isDirectory()) {
+                findFilesRecursively(fileOrDir, resumeFiles);
+            } else {
+                String name = fileOrDir.getName().toLowerCase();
+                if (name.endsWith(".txt") || name.endsWith(".pdf")) {
+                    resumeFiles.add(fileOrDir);
+                }
+            }
         }
         return resumeFiles;
     }

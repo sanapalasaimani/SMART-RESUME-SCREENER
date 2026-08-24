@@ -57,8 +57,7 @@ public class SmartResumeScreenerGUI extends JFrame {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("."));
             chooser.setDialogTitle("Select Resumes Directory");
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooser.setAcceptAllFileFilterUsed(false);
+            chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             
             if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 resumesDirField.setText(chooser.getSelectedFile().getAbsolutePath());
