@@ -1,0 +1,5 @@
+Software Engineer (Java)
+
+We are looking for a Software Engineer with at least 3 years of experience in Java development.
+The ideal candidate should have a solid understanding of Object-Oriented Programming, experience with RESTful APIs, and familiarity with Git.
+A Bachelor's degree in Computer Science or a related field is required.

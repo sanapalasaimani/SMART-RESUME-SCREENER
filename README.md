@@ -1,0 +1,43 @@
+# Smart Resume Screener
+
+A native Java CLI application for screening resumes against a job description using a Large Language Model (LLM).
+
+## Features
+- Intelligently parses text resumes and job descriptions.
+- Extracts structured data: skills, experience, and education.
+- Computes a match score (1-10) with justification using the Groq API (llama-3.1-8b-instant).
+- Saves results persistently to a local CSV database (`database.csv`).
+- Displays a shortlisted ranking in the command prompt.
+
+## Prerequisites
+- Java 17 or higher
+- A Groq API Key
+
+## Setup
+1. Create a `.env` file in the root directory (same level as `src`).
+2. Add your Groq API key to the `.env` file:
+   ```
+   GROQ_API_KEY=your_api_key_here
+   ```
+
+## Compilation
+Open a command prompt in the root directory and run:
+```bash
+javac src/*.java
+```
+
+## Execution
+Run the compiled application:
+```bash
+java -cp src SmartResumeScreener
+```
+
+### Usage Instructions
+1. When prompted, provide the path to your Job Description text file. (e.g., `job_desc.txt`)
+2. Next, provide the directory containing the resume text files. (e.g., `resumes/`)
+3. The application will process each resume, communicate with the LLM, and display the shortlisted candidates in descending order of their match score.
+4. The results are also saved locally to `database.csv`.
+
+## LLM Prompts
+The core prompt used for candidate evaluation is:
+> "Compare the following resume with this job description. Extract structured data: skills, experience, education. Compute a match score between candidate and job description (1-10). Provide a justification. Return exactly a JSON object (and nothing else) with keys: 'skills', 'experience', 'education', 'matchScore' (integer), and 'justification'."

@@ -1,0 +1,14 @@
+John Doe
+Email: john.doe@email.com
+Phone: 123-456-7890
+
+Education:
+B.S. Computer Science, University of Technology, 2018
+
+Experience:
+Java Developer, Tech Solutions (2019-2023)
+- Developed RESTful APIs using Java and Spring Boot.
+- Managed source code using Git and GitHub.
+
+Skills:
+Java, Python, C++, SQL, REST APIs, Git.
