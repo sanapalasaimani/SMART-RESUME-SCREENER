@@ -27,15 +27,15 @@ javac src/*.java
 ```
 
 ## Execution
-Run the compiled application:
+Run the compiled application to open the graphical interface:
 ```bash
-java -cp src SmartResumeScreener
+java -cp src SmartResumeScreenerGUI
 ```
 
 ### Usage Instructions
-1. When prompted, provide the path to your Job Description text file. (e.g., `job_desc.txt`)
-2. Next, provide the directory containing the resume text files. (e.g., `resumes/`)
-3. The application will process each resume, communicate with the LLM, and display the shortlisted candidates in descending order of their match score.
+1. Paste your Job Description text directly into the designated area.
+2. Click "Browse..." and select the directory containing the resume text files (e.g., `resumes/`).
+3. Click "Run Screener". The application will process each resume, communicate with the LLM, and display the shortlisted candidates visually in the text box.
 4. The results are also saved locally to `database.csv`.
 
 ## LLM Prompts
