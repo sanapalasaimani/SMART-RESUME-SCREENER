@@ -1,3 +1,6 @@
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,6 +11,15 @@ import java.util.List;
 public class ResumeParser {
 
     public static String readTextFile(String filePath) throws IOException {
+        if (filePath.toLowerCase().endsWith(".pdf")) {
+            try (PDDocument document = PDDocument.load(new File(filePath))) {
+                if (!document.isEncrypted()) {
+                    PDFTextStripper stripper = new PDFTextStripper();
+                    return stripper.getText(document);
+                }
+                return "Encrypted PDF cannot be read.";
+            }
+        }
         return new String(Files.readAllBytes(Paths.get(filePath)));
     }
 
@@ -18,7 +30,8 @@ public class ResumeParser {
             File[] files = dir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
+                    String name = file.getName().toLowerCase();
+                    if (file.isFile() && (name.endsWith(".txt") || name.endsWith(".pdf"))) {
                         resumeFiles.add(file);
                     }
                 }

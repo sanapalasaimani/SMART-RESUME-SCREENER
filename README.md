@@ -23,13 +23,13 @@ A native Java CLI application for screening resumes against a job description us
 ## Compilation
 Open a command prompt in the root directory and run:
 ```bash
-javac src/*.java
+javac -cp "src;lib/*" src/*.java
 ```
 
 ## Execution
 Run the compiled application to open the graphical interface:
 ```bash
-java -cp src SmartResumeScreenerGUI
+java -cp "src;lib/*" SmartResumeScreenerGUI
 ```
 
 ### Usage Instructions

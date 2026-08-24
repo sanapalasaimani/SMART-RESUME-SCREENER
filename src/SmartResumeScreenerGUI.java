@@ -113,7 +113,7 @@ public class SmartResumeScreenerGUI extends JFrame {
 
         List<File> resumeFiles = ResumeParser.getResumeFiles(resumeDir);
         if (resumeFiles.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No .txt resumes found in the selected folder.", "Not Found", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No .txt or .pdf resumes found in the selected folder.", "Not Found", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -178,7 +178,7 @@ public class SmartResumeScreenerGUI extends JFrame {
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
             // ignore
         }
